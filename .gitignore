@@ -1,0 +1,56 @@
+# =========================
+# OS & Environment
+# =========================
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+
+# =========================
+# IDEs & Editors
+# =========================
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# =========================
+# Frontend: React Native & Expo (mobile/)
+# =========================
+node_modules/
+npm-debug.log
+yarn-error.log
+.expo/
+dist/
+web-build/
+*.tsbuildinfo
+
+# Expo / React Native native folders 
+ios/
+android/
+
+# Coverage reports (for Jest TDD)
+coverage/
+
+# =========================
+# Backend: Spring Boot & Java (api/)
+# =========================
+target/
+build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!mvnw
+!mvnw.cmd
+*.class
+*.log
+*.jar
+*.war
+
+# =========================
+# Docker
+# =========================
+.docker/
+docker-compose.override.yml
