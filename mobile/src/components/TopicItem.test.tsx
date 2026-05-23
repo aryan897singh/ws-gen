@@ -6,14 +6,24 @@ import TopicItem from './TopicItem';
 const DEL_TOPIC_BTN = "Delete Topic";
 const DEL_TOPIC_WRNING = "Are you sure you want to delete?";
 
-describe('TopicItem Component', () => {
-    it('requests confirmation when the delete button is pressed', () => {
-        //Define mock function
-        const mockOnDelete = jest.fn();
-        
-        //Define spy for alerts
-        const alertSpy = jest.spyOn(Alert, 'alert');
+const existingTopics = ['Gradient', 'SGD', 'Infinite Series', 'Angular Momentum'];
 
+describe('TopicItem Component', () => {
+
+    let mockOnDelete: jest.Mock;
+    let alertSpy: jest.SpyInstance;
+
+    beforeEach(() => { //before every unit test 
+        mockOnDelete = jest.fn();
+        alertSpy = jest.spyOn(Alert, 'alert');
+    })
+
+    afterEach(() =>{ //after every unit test
+        jest.clearAllMocks();
+    })
+
+
+    it('requests confirmation when the delete button is pressed', () => {
         //render screen
         const { getByText } = render(
             <TopicItem topic="Calculus III" onDelete={mockOnDelete} />
@@ -32,4 +42,22 @@ describe('TopicItem Component', () => {
         expect(mockOnDelete).not.toHaveBeenCalled(); //Delete func not called unless alert accepted
 
     });
+
+    it('does NOT call onDelete when cancel is pressed in the alert', () => {
+        //render screen
+        const {getByText} = render(
+            <TopicItem topic='Calculus III' onDelete={mockOnDelete}/>
+        )
+        const delButton = getByText(DEL_TOPIC_BTN);
+        fireEvent.press(delButton);
+
+        //Now within the alert we call the cancel button
+        const buttonArray = alertSpy.mock.calls[0][2];
+
+        buttonArray[1].onPress();
+
+        expect(mockOnDelete).not.toHaveBeenCalled();       
+    } )
+
+    
 });
