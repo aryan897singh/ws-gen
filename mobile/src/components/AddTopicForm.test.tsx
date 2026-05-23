@@ -2,11 +2,14 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import AddTopicForm from './AddTopicForm';
 
-const existingTopics = ['Gradient', 'SGD', 'Infinite Series', 'Angular Momentum'];
-
 const ENTER_TOPIC_INP_TXT = 'Enter a topic: ';
 const ADD_BTN_TXT = 'add';
 const DUP_ERR_MSG = 'Topic Already Exists!';
+const MAX_ERR_MSG = 'Max Topic Limit has been Reached!';
+const MAX_TOPIC_LIMIT = 10;
+
+const existingTopics = ['Gradient', 'SGD', 'Infinite Series', 'Angular Momentum'];
+const maxTopics = Array(MAX_TOPIC_LIMIT).fill('dummy topic');
 
 
 describe('AddTopicForm Component', () => {
@@ -66,7 +69,7 @@ describe('AddTopicForm Component', () => {
     })
 
     //Spec 3a. - Refuse to add already existing topics 
-    it('successfuly refuses to add an existing topic regardless of case', () =>{
+    it('successfully refuses to add an existing topic regardless of case', () =>{
         //mock function:
         const mockOnAddTopic = jest.fn();
 
@@ -87,6 +90,27 @@ describe('AddTopicForm Component', () => {
         expect(addButton.props.disabled).toBe(true);
         expect(getByText(DUP_ERR_MSG)).toBeTruthy();
     });
+
+    //Spec 5a - Disable Addition of topics once max limit is hit 
+    it('successfuly prevents addition of topics once max limit is reached', () => {
+
+        //define mock function:
+        const mockOnAddTopic = jest.fn();
+
+        //render the screen
+        const {getByPlaceholderText, getByText} = render(
+            <AddTopicForm onAddTopic={mockOnAddTopic} addTopicProps={maxTopics}/>
+        );
+
+        //scan and simulate:
+        const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+        const addButton = getByText(ADD_BTN_TXT);
+
+        fireEvent.changeText(input, 'dummy topic max + 1');
+        expect(addButton.props.disabled).toBe(true);
+        expect(getByText(MAX_ERR_MSG)).toBeTruthy(); //Anything other than null
+    });
+
 
 
 });
