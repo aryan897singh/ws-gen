@@ -1,6 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
-export default function AddTopicForm() {
+interface AddTopicFormProps {
+    onAddTopic: (topic: string) => void;
+}
+
+export default function AddTopicForm({onAddTopic} : AddTopicFormProps) {
   return <View />;
 }
