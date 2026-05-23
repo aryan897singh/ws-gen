@@ -32,10 +32,31 @@ describe('AddTopicForm Component', () => {
         const input = getByPlaceholderText('Enter a topic: ');
         const addButton = getByText('add');
 
-        fireEvent.changeText(input, '"The quick brown fox jumps over the lazy dog\'s head.'); //51 characters
+        fireEvent.changeText(input, 'The quick brown fox jumps over the lazy dog\'s head.'); //51 characters
 
         expect(addButton.props.disabled).toBe(true); //Checking if the button is disabled 
     });
+
+    //Spec 1a. Blank Topic/Simply Whitespaces
+    it('succesfully prevents addition of blank topic', () => {
+        //mock func
+        const mockOnAddTopic = jest.fn();
+
+        //now render the screen to test
+        const {getByPlaceholderText, getByText} = render (
+            <AddTopicForm onAddTopic={mockOnAddTopic}/>
+        );
+
+        //Now scan for inputs and try to input
+        const input = getByPlaceholderText('Enter a topic: ');
+        const addButton = getByText('add');
+
+        fireEvent.changeText(input, '');
+        expect(addButton.props.disabled).toBe(true);
+
+        fireEvent.changeText(input, '  ');
+        expect(addButton.props.disabled).toBe(true);
+    })
 
 
     
