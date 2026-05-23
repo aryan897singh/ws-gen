@@ -4,6 +4,11 @@ import AddTopicForm from './AddTopicForm';
 
 const existingTopics = ['Gradient', 'SGD', 'Infinite Series', 'Angular Momentum'];
 
+const ENTER_TOPIC_INP_TXT = 'Enter a topic: ';
+const ADD_BTN_TXT = 'add';
+const DUP_ERR_MSG = 'Topic Already Exists!';
+
+
 describe('AddTopicForm Component', () => {
     //Spec 4a. Adding the topic
     it('successfully adds a valid topic', () =>{
@@ -12,8 +17,8 @@ describe('AddTopicForm Component', () => {
             <AddTopicForm onAddTopic={mockOnAddTopic} addTopicProps={existingTopics} />
         );
 
-        const input = getByPlaceholderText('Enter a topic: ');
-        const addButton= getByText('add');
+        const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+        const addButton= getByText(ADD_BTN_TXT);
 
         fireEvent.changeText(input, 'Calculus III');
         fireEvent.press(addButton);
@@ -31,8 +36,8 @@ describe('AddTopicForm Component', () => {
         );
 
         //Fake rendering of screen, now scan and fire:
-        const input = getByPlaceholderText('Enter a topic: ');
-        const addButton = getByText('add');
+        const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+        const addButton = getByText(ADD_BTN_TXT);
 
         fireEvent.changeText(input, 'The quick brown fox jumps over the lazy dog\'s head.'); //51 characters
 
@@ -50,8 +55,8 @@ describe('AddTopicForm Component', () => {
         );
 
         //Now scan for inputs and try to input
-        const input = getByPlaceholderText('Enter a topic: ');
-        const addButton = getByText('add');
+        const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+        const addButton = getByText(ADD_BTN_TXT);
 
         fireEvent.changeText(input, '');
         expect(addButton.props.disabled).toBe(true);
@@ -71,16 +76,16 @@ describe('AddTopicForm Component', () => {
         )
 
         //Now scan the screen, simulate the input 
-        const input = getByPlaceholderText('Enter a topic: ');
-        const addButton = getByText('add');
+        const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+        const addButton = getByText(ADD_BTN_TXT);
 
         fireEvent.changeText(input, 'sgD');
         expect(addButton.props.disabled).toBe(true);
-        expect(getByText('Topic Already Exists!')).toBeTruthy();
+        expect(getByText(DUP_ERR_MSG)).toBeTruthy();
 
         fireEvent.changeText(input, 'aNgUlar MomenTUM');
         expect(addButton.props.disabled).toBe(true);
-        expect(getByText('Topic Already Exists!')).toBeTruthy();
+        expect(getByText(DUP_ERR_MSG)).toBeTruthy();
     });
 
 
