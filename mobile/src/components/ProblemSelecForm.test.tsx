@@ -5,6 +5,7 @@ import ProblemSelecForm from './ProblemSelecForm';
 const GEN_BTN_TXT = 'Generate Question Set';
 const TOTAL_PROB_SLIDER_ID = 'total-problems-slider'; 
 const CHOCOLATE_PROB_SLIDER_ID = 'chocolate-problems-slider';
+const PROMPT_INPUT_ID = 'prompt-input';
 
 describe('ProblemSelecForm Component', () => {
     let mockOnGenerate: jest.Mock;
@@ -67,6 +68,24 @@ describe('ProblemSelecForm Component', () => {
 
         const genButton = getByText(GEN_BTN_TXT);
         expect(genButton.props.disabled).toBe(true);
+    })
+    
+    it('succesfully allows a blank instructions prompt', () => { //Both empty and only whitespaces
+        const {getByTestId, getByText} = render(
+            <ProblemSelecForm onGenerate={mockOnGenerate}/>
+        )
+
+        //enabling the button
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 10);
+
+        fireEvent.changeText(getByTestId(PROMPT_INPUT_ID), '');
+
+        const genButton = getByText(GEN_BTN_TXT);
+        expect(genButton.props.disabled).toBe(false);
+
+        fireEvent.changeText(getByTestId(PROMPT_INPUT_ID), '  ');
+        expect(genButton.props.disabled).toBe(false);
+
     })
 
 
