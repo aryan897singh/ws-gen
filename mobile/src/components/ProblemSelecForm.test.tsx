@@ -4,7 +4,7 @@ import ProblemSelecForm from './ProblemSelecForm';
 
 const GEN_BTN_TXT = 'Generate Question Set';
 const TOTAL_PROB_SLIDER_ID = 'total-problems-slider'; 
-const CHOCLATE_PROB_INPUT = 'Chocolate Problems';
+const CHOCOLATE_PROB_SLIDER_ID = 'chocolate-problems-slider';
 
 describe('ProblemSelecForm Component', () => {
     let mockOnGenerate: jest.Mock;
@@ -42,5 +42,21 @@ describe('ProblemSelecForm Component', () => {
         expect(genButton.props.disabled).toBe(true);
     })
 
-    
+    it('succesfully accepts 0 chocolate problems', () => {
+        const {getByTestId, getByText} = render(
+            <ProblemSelecForm onGenerate={mockOnGenerate}/>
+        )
+        
+        //enabling the button
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 10);
+        
+        const slider = getByTestId(CHOCOLATE_PROB_SLIDER_ID);
+        fireEvent(slider, 'onValueChange', 0);
+
+        const genButton = getByText(GEN_BTN_TXT);
+        expect(genButton.props.disabled).toBe(false);
+    })
+
+
+
 });
