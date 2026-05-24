@@ -85,9 +85,43 @@ describe('ProblemSelecForm Component', () => {
 
         fireEvent.changeText(getByTestId(PROMPT_INPUT_ID), '  ');
         expect(genButton.props.disabled).toBe(false);
-
     })
 
+    it('succesfully accepts only positive integer problem count inputs', () => {
+        const {getByTestId, getByText} = render(
+            <ProblemSelecForm onGenerate={mockOnGenerate}/>
+        )
 
+        //Setting valid count for enabling
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 15);
+
+        const genButton = getByText(GEN_BTN_TXT);
+        expect(genButton.props.disabled).toBe(false);
+        
+
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 1.5);
+        expect(genButton.props.disabled).toBe(true);
+
+        //Setting valid count for enabling
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 15);
+        fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), 'onValueChange', 0.5);
+        expect(genButton.props.disabled).toBe(true);
+
+
+        //NEGATIVE NUMBERS:
+
+        //Setting valid count for enabling
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 15);
+        expect(genButton.props.disabled).toBe(false);
+        
+
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', -10);
+        expect(genButton.props.disabled).toBe(true);
+
+        //Setting valid count for enabling
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 15);
+        fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), 'onValueChange', -7);
+        expect(genButton.props.disabled).toBe(true);    
+    })
 
 });
