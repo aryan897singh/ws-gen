@@ -46,7 +46,7 @@ describe('ProblemSelecForm Component', () => {
         const {getByTestId, getByText} = render(
             <ProblemSelecForm onGenerate={mockOnGenerate}/>
         )
-        
+
         //enabling the button
         fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 10);
         
@@ -55,6 +55,18 @@ describe('ProblemSelecForm Component', () => {
 
         const genButton = getByText(GEN_BTN_TXT);
         expect(genButton.props.disabled).toBe(false);
+    })
+
+    it('succesfully prevents adding more chocolate problems than total problem count', () => {
+        const {getByTestId, getByText} = render(
+            <ProblemSelecForm onGenerate={mockOnGenerate}/>
+        )
+
+        fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), 'onValueChange', 10);
+        fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), 'onValueChange', 11);
+
+        const genButton = getByText(GEN_BTN_TXT);
+        expect(genButton.props.disabled).toBe(true);
     })
 
 
