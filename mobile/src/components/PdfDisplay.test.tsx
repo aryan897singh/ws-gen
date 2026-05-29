@@ -28,5 +28,13 @@ describe('PdfDisplay Component', () => {
         expect(getByTestId(LOADING_SPINNER_ID)).toBeTruthy();
     })
 
+    it('succesfully renders the PDF display component on API success status', () => {
+        const {getByTestId} = render(
+            <PdfDisplay status="success" pdfUrl="https://example.com/fake.pdf" onDownload={mockOnDownload} />
+        );
+
+        expect(getByTestId(PDF_VIEW_ID)).toBeTruthy();
+    })
+
     
 });
