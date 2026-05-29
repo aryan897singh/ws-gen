@@ -49,5 +49,11 @@ describe('PdfDisplay Component', () => {
         
     })
 
+    it('succesfully informs the user of generation failure on API failure', () => {
+        const {getByTestId} = render (
+            <PdfDisplay status="error"/>
+        );
+        expect(getByTestId(ERROR_MSG_ID)).toBeTruthy();
+    })
     
 });
