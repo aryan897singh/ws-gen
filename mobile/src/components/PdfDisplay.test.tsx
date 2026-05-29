@@ -18,5 +18,15 @@ describe('PdfDisplay Component', () => {
         jest.clearAllMocks();
     });
 
+    it('displays a loading spinning icon while waiting for api response', () => {
+        //render the screen
+        const {getByTestId} = render(
+            <PdfDisplay status="loading" onDownload={mockOnDownload} />
+        );
+
+        //now expect the loading icon to be present, i.e truthy
+        expect(getByTestId(LOADING_SPINNER_ID)).toBeTruthy();
+    })
+
     
 });
