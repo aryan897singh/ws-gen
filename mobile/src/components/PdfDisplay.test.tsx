@@ -21,7 +21,7 @@ describe('PdfDisplay Component', () => {
     it('displays a loading spinning icon while waiting for api response', () => {
         //render the screen
         const {getByTestId} = render(
-            <PdfDisplay status="loading" onDownload={mockOnDownload} />
+            <PdfDisplay status="loading"/>
         );
 
         //now expect the loading icon to be present, i.e truthy
@@ -34,6 +34,19 @@ describe('PdfDisplay Component', () => {
         );
 
         expect(getByTestId(PDF_VIEW_ID)).toBeTruthy();
+    })
+
+    it('successfully displays a usable download button, and runs on API success status', () => {
+        const {getByText} = render(
+            <PdfDisplay status="success" onDownload={mockOnDownload}/>
+        )
+        //verify that the button is present in the first place
+        expect(getByText(DOWNLOAD_BTN_TXT)).toBeTruthy();
+
+        //now simulating the download, and making sure it is called
+        fireEvent.press(getByText(DOWNLOAD_BTN_TXT));
+        expect(mockOnDownload).toHaveBeenCalled();
+        
     })
 
     
