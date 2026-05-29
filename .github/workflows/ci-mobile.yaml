@@ -1,0 +1,62 @@
+name: Mobile CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'mobile/**'
+
+jobs:
+  code-quality:
+    name: Lint & Format Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'mobile/package-lock.json'
+
+      - name: Install Dependencies
+        working-directory: ./mobile
+        run: npm ci
+
+      - name: Execute ESLint
+        working-directory: ./mobile
+        run: npm run lint
+
+      - name: Verify Code Formatting (Prettier)
+        working-directory: ./mobile
+        run: npm run format:check
+
+  testing-and-security:
+    name: Test Suite & Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'mobile/package-lock.json'
+
+      - name: Install Dependencies
+        working-directory: ./mobile
+        run: npm ci
+
+      - name: Run Unit & Component Tests (Jest + RNTL)
+        working-directory: ./mobile
+        run: npm run test
+
+      - name: Run Semgrep Static Security Scan
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: p/react-native
