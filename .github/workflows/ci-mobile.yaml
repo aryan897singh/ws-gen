@@ -6,6 +6,7 @@ on:
       - dev
     paths:
       - 'mobile/**'
+  workflow_dispatch:
 
 jobs:
   code-quality:
