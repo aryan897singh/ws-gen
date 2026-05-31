@@ -35,6 +35,7 @@
     "@types/react": "~19.2.2",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~56.0.4",
+    "prettier": "^3.8.3",
     "ts-jest": "^29.4.11",
     "typescript": "~6.0.3"
   },
@@ -46,7 +47,9 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "private": true,
   "jest": {
