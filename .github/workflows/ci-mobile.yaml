@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - dev
+      - test
     paths:
       - 'mobile/**'
   workflow_dispatch:
