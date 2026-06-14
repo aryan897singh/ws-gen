@@ -1,23 +1,43 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaViewBase } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaViewBase, TouchableOpacity } from "react-native";
 
 interface AddTopicFormProps {
   onAddTopic: (topic: string) => void;
   addTopicProps: string[];
 }
 
-export default function AddTopicForm({ onAddTopic }: AddTopicFormProps) {
+export default function AddTopicForm({ onAddTopic, addTopicProps }: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
   const isBlank = inputText.trim() === "";
   const isTooLong = inputText.trim().length > 50;
   const disableButton = isBlank || isTooLong; 
+  
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>New Concept</Text>
+      <TextInput
+        style = {styles.input}
+        placeholder="Enter a topic: "
+        value = {inputText}
+        onChangeText={setInputText}
+        />
       
+      <View
+        style = {styles.buttonContainer}>
+        <TouchableOpacity
+          disabled = {disableButton}
+          testID="add-button">
+          <Text>add</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <Text>cancel</Text>
+        </TouchableOpacity>
+        </View>
       
+
     </View>
   );
 }
