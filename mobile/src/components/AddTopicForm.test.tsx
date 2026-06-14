@@ -65,7 +65,7 @@ describe("AddTopicForm Component", () => {
     const mockOnAddTopic = jest.fn();
 
     //now render the screen to test
-    const { getByPlaceholderText, getByText } = render(
+    const { getByPlaceholderText, getByText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         addTopicProps={existingTopics}
@@ -74,13 +74,13 @@ describe("AddTopicForm Component", () => {
 
     //Now scan for inputs and try to input
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
-    const addButton = getByText(ADD_BTN_TXT);
+    const addButton = getByTestId("add-button");
 
     fireEvent.changeText(input, "");
-    expect(addButton.props.disabled).toBe(true);
+    expect(addButton.props.accessibilityState.disabled).toBe(true);
 
     fireEvent.changeText(input, "  ");
-    expect(addButton.props.disabled).toBe(true);
+    expect(addButton.props.accessibilityState.disabled).toBe(true);
   });
 
   //Spec 3a. - Refuse to add already existing topics
