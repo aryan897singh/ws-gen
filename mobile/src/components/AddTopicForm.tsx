@@ -8,8 +8,8 @@ interface AddTopicFormProps {
 
 export default function AddTopicForm({ onAddTopic }: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
-  const isBlank = inputText.trim() == "" ? true : false;
-  const isTooLong = inputText.trim().length > 50 ? true : false;
+  const isBlank = inputText.trim() === "";
+  const isTooLong = inputText.trim().length > 50;
   const disableButton = isBlank || isTooLong; 
 
 
