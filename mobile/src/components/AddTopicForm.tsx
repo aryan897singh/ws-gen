@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaViewBase } from "react-native";
 
 interface AddTopicFormProps {
   onAddTopic: (topic: string) => void;
@@ -8,6 +8,9 @@ interface AddTopicFormProps {
 
 export default function AddTopicForm({ onAddTopic }: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
+  const isBlank = inputText.trim() == "" ? true : false;
+  const isTooLong = inputText.trim().length > 50 ? true : false;
+  const disableButton = isBlank || isTooLong; 
 
 
   return (
@@ -19,14 +22,12 @@ export default function AddTopicForm({ onAddTopic }: AddTopicFormProps) {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     padding: 16,
     backgroundColor: "#ffffff",
     borderRadius: 8,
-    // Basic drop shadow for some depth (works on both iOS and Android)
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -49,10 +50,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000000",
     backgroundColor: "#f8f9fa",
-    marginBottom: 16,
   },
   buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between", 
+    marginTop: 16,
+    gap: 12,
+  },
+  button: {
+    flex: 1,
+    height: 44,
     borderRadius: 6,
-    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  confirmButton: {
+    backgroundColor: "#007AFF",
+  },
+  disabledButton: {
+    backgroundColor: "#A0CFFF",
+  },
+  cancelButton: {
+    backgroundColor: "#f8f9fa",
+    borderWidth: 1,
+    borderColor: "#cccccc",
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  cancelButtonText: {
+    color: "#333333",
   }
 });
