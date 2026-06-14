@@ -40,7 +40,7 @@ describe("AddTopicForm Component", () => {
   //Spec 2a. 50 Limit Char
   it("succesfully prevents topic name > 50 characters", () => {
     const mockOnAddTopic = jest.fn(); //mock func
-    const { getByPlaceholderText, getByText } = render(
+    const { getByPlaceholderText, getByText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         addTopicProps={existingTopics}
@@ -49,14 +49,14 @@ describe("AddTopicForm Component", () => {
 
     //Fake rendering of screen, now scan and fire:
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
-    const addButton = getByText(ADD_BTN_TXT);
+    const addButton = getByTestId("add-button");
 
     fireEvent.changeText(
       input,
       "The quick brown fox jumps over the lazy dog's head.",
     ); //51 characters
 
-    expect(addButton.props.disabled).toBe(true); //Checking if the button is disabled
+    expect(addButton.props.accessibilityState.disabled).toBe(true); //Checking if the button is disabled
   });
 
   //Spec 1a. Blank Topic/Simply Whitespaces
