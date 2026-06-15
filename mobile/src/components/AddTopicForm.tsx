@@ -4,14 +4,16 @@ import { View, Text, TextInput, Button, StyleSheet, SafeAreaViewBase, TouchableO
 interface AddTopicFormProps {
   onAddTopic: (topic: string) => void;
   existingTopicsSet: Set<string>;
+  MAX_TOPIC_LIMIT: number;
 }
 
-export default function AddTopicForm({ onAddTopic, existingTopicsSet }: AddTopicFormProps) {
+export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_LIMIT }: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
   const isBlank = inputText.trim() === "";
   const isTooLong = inputText.trim().length > 50;
   const isDuplicate = existingTopicsSet.has(inputText.toUpperCase().trim())
-  const disableButton = isBlank || isTooLong || isDuplicate; 
+  const maxTopicLimitHit = existingTopicsSet.size >= MAX_TOPIC_LIMIT;
+  const disableButton = isBlank || isTooLong || isDuplicate || maxTopicLimitHit; 
   
 
 
@@ -27,6 +29,9 @@ export default function AddTopicForm({ onAddTopic, existingTopicsSet }: AddTopic
         {
           isDuplicate &&
           <Text>Topic Already Exists!</Text>
+        }{
+          maxTopicLimitHit &&
+          <Text>Max Topic Limit has been Reached!</Text>
         }
       
       <View
