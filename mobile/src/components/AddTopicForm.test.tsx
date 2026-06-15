@@ -8,13 +8,19 @@ const DUP_ERR_MSG = "Topic Already Exists!";
 const MAX_ERR_MSG = "Max Topic Limit has been Reached!";
 const MAX_TOPIC_LIMIT = 10;
 
-const existingTopics = [
-  "Gradient",
+//DEV NOTE: The component will be provided a clean set with all upper-case trimmed l and r topics
+const existingTopics = new Set([
+  "GRADIENT",
   "SGD",
-  "Infinite Series",
-  "Angular Momentum",
-];
-const maxTopics = Array(MAX_TOPIC_LIMIT).fill("dummy topic");
+  "INFINITE SERIES",
+  "ANGULAR MOMENTUM"  
+]);
+
+
+//Creating a set of size max topic limit:
+const maxTopics = new Set(
+  Array.from({ length: MAX_TOPIC_LIMIT }, (_, i) => `dummy topic ${i}`)
+);
 
 describe("AddTopicForm Component", () => {
   //Spec 4a. Adding the topic
@@ -23,7 +29,7 @@ describe("AddTopicForm Component", () => {
     const { getByPlaceholderText, getByText } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
-        addTopicProps={existingTopics}
+        existingTopicsSet={existingTopics}
       />,
     );
 
@@ -43,7 +49,7 @@ describe("AddTopicForm Component", () => {
     const { getByPlaceholderText, getByText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
-        addTopicProps={existingTopics}
+        existingTopicsSet={existingTopics}
       />,
     );
 
@@ -68,7 +74,7 @@ describe("AddTopicForm Component", () => {
     const { getByPlaceholderText, getByText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
-        addTopicProps={existingTopics}
+        existingTopicsSet={existingTopics}
       />,
     );
 
@@ -92,7 +98,7 @@ describe("AddTopicForm Component", () => {
     const { getByPlaceholderText, getByText } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
-        addTopicProps={existingTopics}
+        existingTopicsSet={existingTopics}
       />,
     );
 
@@ -116,7 +122,7 @@ describe("AddTopicForm Component", () => {
 
     //render the screen
     const { getByPlaceholderText, getByText } = render(
-      <AddTopicForm onAddTopic={mockOnAddTopic} addTopicProps={maxTopics} />,
+      <AddTopicForm onAddTopic={mockOnAddTopic} existingTopicsSet={maxTopics} />,
     );
 
     //scan and simulate:
