@@ -95,7 +95,7 @@ describe("AddTopicForm Component", () => {
     const mockOnAddTopic = jest.fn();
 
     //render the screen:
-    const { getByPlaceholderText, getByText } = render(
+    const { getByPlaceholderText, getByText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
@@ -104,14 +104,14 @@ describe("AddTopicForm Component", () => {
 
     //Now scan the screen, simulate the input
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
-    const addButton = getByText(ADD_BTN_TXT);
+    const addButton = getByTestId("add-button");
 
     fireEvent.changeText(input, "sgD");
-    expect(addButton.props.disabled).toBe(true);
+    expect(addButton.props.accessibilityState.disabled).toBe(true);
     expect(getByText(DUP_ERR_MSG)).toBeTruthy();
 
     fireEvent.changeText(input, "aNgUlar MomenTUM");
-    expect(addButton.props.disabled).toBe(true);
+    expect(addButton.props.accessibilityState.disabled).toBe(true);
     expect(getByText(DUP_ERR_MSG)).toBeTruthy();
   });
 
