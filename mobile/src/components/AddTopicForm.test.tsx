@@ -185,4 +185,25 @@ describe("AddTopicForm Component", () => {
     expect(input.props.value).toBe("");
   });
 
+  it("succesfully removes the success message on entering a new topic", () => {
+    const mockOnAddTopic = jest.fn();
+    
+    const {getByTestId, getByPlaceholderText, getByText, queryByText} = render(
+      <AddTopicForm
+        onAddTopic={mockOnAddTopic}
+        existingTopicsSet={existingTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}/>
+    );
+
+    const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+    const addButton = getByTestId("add-button");
+
+    fireEvent.changeText(input, "Dummy Topic");
+    fireEvent.press(addButton);
+    expect(getByText(ADD_SUCCESS_MSG)).toBeTruthy();
+
+    fireEvent.changeText(input, "w");
+    expect(queryByText(ADD_SUCCESS_MSG)).toBeNull();
+  });
+
 });
