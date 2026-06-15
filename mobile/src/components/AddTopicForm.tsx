@@ -3,14 +3,15 @@ import { View, Text, TextInput, Button, StyleSheet, SafeAreaViewBase, TouchableO
 
 interface AddTopicFormProps {
   onAddTopic: (topic: string) => void;
-  addTopicProps: string[];
+  existingTopicsSet: Set<string>;
 }
 
-export default function AddTopicForm({ onAddTopic, addTopicProps }: AddTopicFormProps) {
+export default function AddTopicForm({ onAddTopic, existingTopicsSet }: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
   const isBlank = inputText.trim() === "";
   const isTooLong = inputText.trim().length > 50;
-  const disableButton = isBlank || isTooLong; 
+  const isDuplicate = existingTopicsSet.has(inputText.toUpperCase().trim())
+  const disableButton = isBlank || isTooLong || isDuplicate; 
   
 
 
@@ -23,6 +24,10 @@ export default function AddTopicForm({ onAddTopic, addTopicProps }: AddTopicForm
         value = {inputText}
         onChangeText={setInputText}
         />
+        {
+          isDuplicate &&
+          <Text>Topic Already Exists!</Text>
+        }
       
       <View
         style = {styles.buttonContainer}>
