@@ -30,6 +30,7 @@ describe("AddTopicForm Component", () => {
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
       />,
     );
 
@@ -50,6 +51,7 @@ describe("AddTopicForm Component", () => {
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
       />,
     );
 
@@ -71,10 +73,11 @@ describe("AddTopicForm Component", () => {
     const mockOnAddTopic = jest.fn();
 
     //now render the screen to test
-    const { getByPlaceholderText, getByText, getByTestId } = render(
+    const { getByPlaceholderText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
       />,
     );
 
@@ -99,6 +102,7 @@ describe("AddTopicForm Component", () => {
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
       />,
     );
 
@@ -121,16 +125,19 @@ describe("AddTopicForm Component", () => {
     const mockOnAddTopic = jest.fn();
 
     //render the screen
-    const { getByPlaceholderText, getByText } = render(
-      <AddTopicForm onAddTopic={mockOnAddTopic} existingTopicsSet={maxTopics} />,
+    const { getByPlaceholderText, getByText, getByTestId } = render(
+      <AddTopicForm 
+        onAddTopic={mockOnAddTopic} 
+        existingTopicsSet={maxTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT} />,
     );
 
     //scan and simulate:
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
-    const addButton = getByText(ADD_BTN_TXT);
+    const addButton = getByTestId("add-button");
 
     fireEvent.changeText(input, "dummy topic max + 1");
-    expect(addButton.props.disabled).toBe(true);
+    expect(addButton.props.accessibilityState.disabled).toBe(true);
     expect(getByText(MAX_ERR_MSG)).toBeTruthy(); //Anything other than null
   });
 });
