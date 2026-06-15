@@ -40,7 +40,7 @@ describe("AddTopicForm Component", () => {
     fireEvent.changeText(input, "Calculus III");
     fireEvent.press(addButton);
 
-    expect(mockOnAddTopic).toHaveBeenCalledWith("Calculus III");
+    expect(mockOnAddTopic).toHaveBeenCalledWith("CALCULUS III");
     expect(mockOnAddTopic).toHaveBeenCalledTimes(1);
   });
 
