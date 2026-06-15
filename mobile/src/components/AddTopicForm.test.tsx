@@ -3,10 +3,10 @@ import { render, fireEvent } from "@testing-library/react-native";
 import AddTopicForm from "./AddTopicForm";
 
 const ENTER_TOPIC_INP_TXT = "Enter a topic: ";
-const ADD_BTN_TXT = "add";
 const DUP_ERR_MSG = "Topic Already Exists!";
 const MAX_ERR_MSG = "Max Topic Limit has been Reached!";
 const MAX_TOPIC_LIMIT = 10;
+const ADD_SUCCESS_MSG = "Succesfully Added Topic!";
 
 //DEV NOTE: The component will be provided a clean set with all upper-case trimmed l and r topics
 const existingTopics = new Set([
@@ -140,4 +140,28 @@ describe("AddTopicForm Component", () => {
     expect(addButton.props.accessibilityState.disabled).toBe(true);
     expect(getByText(MAX_ERR_MSG)).toBeTruthy(); //Anything other than null
   });
+
+
+  it("succesfully presents the user with a success message on clicking add", () => {
+
+    //dummy func:
+    const mockOnAddTopic = jest.fn();
+
+    //render screen
+    const {getByTestId, getByText, getByPlaceholderText} = render(
+      <AddTopicForm
+        onAddTopic={mockOnAddTopic}
+        existingTopicsSet={existingTopics}
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}/>
+    );
+
+    //fire the input
+    const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
+    const addButton = getByTestId("add-button");
+
+    fireEvent.changeText(input, "Dummy Topic");
+    fireEvent.press(addButton);
+    expect(getByText(ADD_SUCCESS_MSG)).toBeTruthy();
+  });
+
 });
