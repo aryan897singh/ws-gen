@@ -26,7 +26,7 @@ describe("AddTopicForm Component", () => {
   //Spec 4a. Adding the topic
   it("successfully adds a valid topic", () => {
     const mockOnAddTopic = jest.fn();
-    const { getByPlaceholderText, getByText } = render(
+    const { getByPlaceholderText, getByTestId} = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
@@ -35,7 +35,7 @@ describe("AddTopicForm Component", () => {
     );
 
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
-    const addButton = getByText(ADD_BTN_TXT);
+    const addButton = getByTestId("add-button");
 
     fireEvent.changeText(input, "Calculus III");
     fireEvent.press(addButton);
