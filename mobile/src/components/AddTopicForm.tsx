@@ -38,7 +38,8 @@ export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_
         style = {styles.buttonContainer}>
         <TouchableOpacity
           disabled = {disableButton}
-          testID="add-button">
+          testID="add-button"
+          onPress={() => onAddTopic(inputText.trim().toUpperCase())}>
           <Text>add</Text>
         </TouchableOpacity>
 
