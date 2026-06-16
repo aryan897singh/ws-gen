@@ -22,6 +22,11 @@ export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_
     setInputText("");
     setShowSuccess(true);
   }
+
+  const handleEnterTopic = (text: string) => {
+    setInputText(text);
+    setShowSuccess(false);
+  }
   
 
 
@@ -32,7 +37,7 @@ export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_
         style = {styles.input}
         placeholder="Enter a topic: "
         value = {inputText}
-        onChangeText={setInputText}
+        onChangeText={(text: string) => handleEnterTopic(text)}
         />
         {
           isDuplicate &&
