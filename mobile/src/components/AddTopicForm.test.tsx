@@ -13,20 +13,19 @@ const existingTopics = new Set([
   "GRADIENT",
   "SGD",
   "INFINITE SERIES",
-  "ANGULAR MOMENTUM"  
+  "ANGULAR MOMENTUM",
 ]);
-
 
 //Creating a set of size max topic limit:
 const maxTopics = new Set(
-  Array.from({ length: MAX_TOPIC_LIMIT }, (_, i) => `dummy topic ${i}`)
+  Array.from({ length: MAX_TOPIC_LIMIT }, (_, i) => `dummy topic ${i}`),
 );
 
 describe("AddTopicForm Component", () => {
   //Spec 4a. Adding the topic
   it("successfully adds a valid topic", () => {
     const mockOnAddTopic = jest.fn();
-    const { getByPlaceholderText, getByTestId} = render(
+    const { getByPlaceholderText, getByTestId } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
@@ -126,10 +125,11 @@ describe("AddTopicForm Component", () => {
 
     //render the screen
     const { getByPlaceholderText, getByText, getByTestId } = render(
-      <AddTopicForm 
-        onAddTopic={mockOnAddTopic} 
+      <AddTopicForm
+        onAddTopic={mockOnAddTopic}
         existingTopicsSet={maxTopics}
-        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT} />,
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
+      />,
     );
 
     //scan and simulate:
@@ -141,18 +141,17 @@ describe("AddTopicForm Component", () => {
     expect(getByText(MAX_ERR_MSG)).toBeTruthy(); //Anything other than null
   });
 
-
   it("succesfully presents the user with a success message on clicking add", () => {
-
     //dummy func:
     const mockOnAddTopic = jest.fn();
 
     //render screen
-    const {getByTestId, getByText, getByPlaceholderText} = render(
+    const { getByTestId, getByText, getByPlaceholderText } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
-        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}/>
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
+      />,
     );
 
     //fire the input
@@ -165,19 +164,19 @@ describe("AddTopicForm Component", () => {
   });
 
   it("succesfully clears out input text box on clicking add", () => {
-
     const mockOnAddTopic = jest.fn();
 
-    const {getByTestId, getByPlaceholderText, getByText} = render(
+    const { getByTestId, getByPlaceholderText, getByText } = render(
       <AddTopicForm
         onAddTopic={mockOnAddTopic}
         existingTopicsSet={existingTopics}
-        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}/>
-      );
+        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
+      />,
+    );
 
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
     const addButton = getByTestId("add-button");
-    
+
     fireEvent.changeText(input, "Dummy Topic");
     fireEvent.press(addButton);
     expect(getByText(ADD_SUCCESS_MSG)).toBeTruthy();
@@ -187,13 +186,15 @@ describe("AddTopicForm Component", () => {
 
   it("succesfully removes the success message on entering a new topic", () => {
     const mockOnAddTopic = jest.fn();
-    
-    const {getByTestId, getByPlaceholderText, getByText, queryByText} = render(
-      <AddTopicForm
-        onAddTopic={mockOnAddTopic}
-        existingTopicsSet={existingTopics}
-        MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}/>
-    );
+
+    const { getByTestId, getByPlaceholderText, getByText, queryByText } =
+      render(
+        <AddTopicForm
+          onAddTopic={mockOnAddTopic}
+          existingTopicsSet={existingTopics}
+          MAX_TOPIC_LIMIT={MAX_TOPIC_LIMIT}
+        />,
+      );
 
     const input = getByPlaceholderText(ENTER_TOPIC_INP_TXT);
     const addButton = getByTestId("add-button");
@@ -205,5 +206,4 @@ describe("AddTopicForm Component", () => {
     fireEvent.changeText(input, "w");
     expect(queryByText(ADD_SUCCESS_MSG)).toBeNull();
   });
-
 });

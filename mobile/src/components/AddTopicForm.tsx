@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaViewBase, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  SafeAreaViewBase,
+  TouchableOpacity,
+} from "react-native";
 
 interface AddTopicFormProps {
   onAddTopic: (topic: string) => void;
@@ -7,64 +15,57 @@ interface AddTopicFormProps {
   MAX_TOPIC_LIMIT: number;
 }
 
-export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_LIMIT }: AddTopicFormProps) {
+export default function AddTopicForm({
+  onAddTopic,
+  existingTopicsSet,
+  MAX_TOPIC_LIMIT,
+}: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
 
   const isBlank = inputText.trim() === "";
   const isTooLong = inputText.trim().length > 50;
-  const isDuplicate = existingTopicsSet.has(inputText.toUpperCase().trim())
+  const isDuplicate = existingTopicsSet.has(inputText.toUpperCase().trim());
   const maxTopicLimitHit = existingTopicsSet.size >= MAX_TOPIC_LIMIT;
-  const disableButton = isBlank || isTooLong || isDuplicate || maxTopicLimitHit; 
+  const disableButton = isBlank || isTooLong || isDuplicate || maxTopicLimitHit;
 
   const handleAddTopic = () => {
     onAddTopic(inputText.toUpperCase().trim());
     setInputText("");
     setShowSuccess(true);
-  }
+  };
 
   const handleEnterTopic = (text: string) => {
     setInputText(text);
     setShowSuccess(false);
-  }
-  
-
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>New Concept</Text>
       <TextInput
-        style = {styles.input}
+        style={styles.input}
         placeholder="Enter a topic: "
-        value = {inputText}
+        value={inputText}
         onChangeText={(text: string) => handleEnterTopic(text)}
-        />
-        {
-          isDuplicate &&
-          <Text>Topic Already Exists!</Text>
-        }{
-          maxTopicLimitHit &&
-          <Text>Max Topic Limit has been Reached!</Text>
-        }{
-          showSuccess && 
-          <Text>Succesfully Added Topic!</Text>
-        }
-      
-      <View
-        style = {styles.buttonContainer}>
+      />
+      {isDuplicate && <Text>Topic Already Exists!</Text>}
+      {maxTopicLimitHit && <Text>Max Topic Limit has been Reached!</Text>}
+      {showSuccess && <Text>Succesfully Added Topic!</Text>}
+
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
-          disabled = {disableButton}
+          disabled={disableButton}
           testID="add-button"
-          onPress={() => handleAddTopic()}>
+          onPress={() => handleAddTopic()}
+        >
           <Text>add</Text>
         </TouchableOpacity>
 
         <TouchableOpacity>
           <Text>cancel</Text>
         </TouchableOpacity>
-        </View>
-      
-
+      </View>
     </View>
   );
 }
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2, 
+    elevation: 2,
     marginBottom: 16,
   },
   label: {
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between", 
+    justifyContent: "space-between",
     marginTop: 16,
     gap: 12,
   },
@@ -129,5 +130,5 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     color: "#333333",
-  }
+  },
 });
