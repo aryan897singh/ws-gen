@@ -9,11 +9,19 @@ interface AddTopicFormProps {
 
 export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_LIMIT }: AddTopicFormProps) {
   const [inputText, setInputText] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const isBlank = inputText.trim() === "";
   const isTooLong = inputText.trim().length > 50;
   const isDuplicate = existingTopicsSet.has(inputText.toUpperCase().trim())
   const maxTopicLimitHit = existingTopicsSet.size >= MAX_TOPIC_LIMIT;
   const disableButton = isBlank || isTooLong || isDuplicate || maxTopicLimitHit; 
+
+  const handleAddTopic = () => {
+    onAddTopic(inputText.toUpperCase().trim());
+    setInputText("");
+    setShowSuccess(true);
+  }
   
 
 
@@ -32,6 +40,9 @@ export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_
         }{
           maxTopicLimitHit &&
           <Text>Max Topic Limit has been Reached!</Text>
+        }{
+          showSuccess && 
+          <Text>Succesfully Added Topic!</Text>
         }
       
       <View
@@ -39,7 +50,7 @@ export default function AddTopicForm({ onAddTopic, existingTopicsSet, MAX_TOPIC_
         <TouchableOpacity
           disabled = {disableButton}
           testID="add-button"
-          onPress={() => onAddTopic(inputText.trim().toUpperCase())}>
+          onPress={() => handleAddTopic()}>
           <Text>add</Text>
         </TouchableOpacity>
 
