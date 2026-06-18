@@ -6,6 +6,7 @@ const GEN_BTN_TXT = "Generate Question Set";
 const TOTAL_PROB_SLIDER_ID = "total-problems-slider";
 const CHOCOLATE_PROB_SLIDER_ID = "chocolate-problems-slider";
 const PROMPT_INPUT_ID = "prompt-input";
+const MAX_PROBLEM_COUNT = 35; //Just for testing 
 
 describe("ProblemSelecForm Component", () => {
   let mockOnGenerate: jest.Mock;
@@ -21,7 +22,7 @@ describe("ProblemSelecForm Component", () => {
   it("accepts a minimum of 1 total question", () => {
     //render screen
     const { getByTestId, getByText } = render(
-      <ProblemSelecForm onGenerate={mockOnGenerate} />,
+      <ProblemSelecForm onGenerate={mockOnGenerate} MAX_PROBLEM_COUNT={MAX_PROBLEM_COUNT} />,
     );
     //scan and test
     const slider = getByTestId(TOTAL_PROB_SLIDER_ID);
@@ -31,13 +32,13 @@ describe("ProblemSelecForm Component", () => {
     expect(genButton.props.disabled).toBe(true);
   });
 
-  it("accepts a maximum of 20 total questions", () => {
+  it("accepts a maximum of injected total questions", () => {
     const { getByTestId, getByText } = render(
-      <ProblemSelecForm onGenerate={mockOnGenerate} />,
+      <ProblemSelecForm onGenerate={mockOnGenerate} MAX_PROBLEM_COUNT={MAX_PROBLEM_COUNT} />,
     );
 
     const slider = getByTestId(TOTAL_PROB_SLIDER_ID);
-    fireEvent(slider, "onValueChange", 21);
+    fireEvent(slider, "onValueChange", (MAX_PROBLEM_COUNT + 1));
 
     const genButton = getByText(GEN_BTN_TXT);
     expect(genButton.props.disabled).toBe(true);
@@ -45,7 +46,7 @@ describe("ProblemSelecForm Component", () => {
 
   it("succesfully accepts 0 chocolate problems", () => {
     const { getByTestId, getByText } = render(
-      <ProblemSelecForm onGenerate={mockOnGenerate} />,
+      <ProblemSelecForm onGenerate={mockOnGenerate} MAX_PROBLEM_COUNT={MAX_PROBLEM_COUNT} />,
     );
 
     //enabling the button
@@ -60,7 +61,7 @@ describe("ProblemSelecForm Component", () => {
 
   it("succesfully prevents adding more chocolate problems than total problem count", () => {
     const { getByTestId, getByText } = render(
-      <ProblemSelecForm onGenerate={mockOnGenerate} />,
+      <ProblemSelecForm onGenerate={mockOnGenerate} MAX_PROBLEM_COUNT={MAX_PROBLEM_COUNT} />,
     );
 
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 10);
@@ -73,7 +74,7 @@ describe("ProblemSelecForm Component", () => {
   it("succesfully allows a blank instructions prompt", () => {
     //Both empty and only whitespaces
     const { getByTestId, getByText } = render(
-      <ProblemSelecForm onGenerate={mockOnGenerate} />,
+      <ProblemSelecForm onGenerate={mockOnGenerate} MAX_PROBLEM_COUNT={MAX_PROBLEM_COUNT} />,
     );
 
     //enabling the button
@@ -90,7 +91,7 @@ describe("ProblemSelecForm Component", () => {
 
   it("succesfully accepts only positive integer problem count inputs", () => {
     const { getByTestId, getByText } = render(
-      <ProblemSelecForm onGenerate={mockOnGenerate} />,
+      <ProblemSelecForm onGenerate={mockOnGenerate} MAX_PROBLEM_COUNT={MAX_PROBLEM_COUNT} />,
     );
 
     //Setting valid count for enabling
