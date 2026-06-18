@@ -45,6 +45,26 @@ export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT}: Probl
             maximumTrackTintColor="#e0e0e0"
             thumbTintColor="#007AFF"
         />
+
+        
+        <Text
+          style={styles.header}>Chocolate Problem Count: (Part of Total Problem Count)</Text>
+        <Text>Note: Chocolate Problems are trickier problems. You cannot input more than the total problem count!</Text>
+        <Slider
+            testID="chocolate-problems-slider"
+            style={{ width: '100%', height: 40 }}
+            minimumValue={0} 
+            maximumValue={problemSliderValue} 
+            step={1} 
+            value={problemSliderValue}
+            onValueChange={(val: number) => {
+              setChocolateSliderValue(val);
+            }}
+            minimumTrackTintColor="#007AFF"
+            maximumTrackTintColor="#e0e0e0"
+            thumbTintColor="#007AFF"
+        />
+
       </View>
   )
 }
