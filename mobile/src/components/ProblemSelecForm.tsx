@@ -17,7 +17,7 @@ export interface ProblemSettings {
 }
 
 interface ProblemSelecFormProps {
-  onGenerate: (settings: ProblemSettings) => void;
+  onGenerate: ({totalProblems, chocolateProblems, prompt}: ProblemSettings) => void;
   MAX_PROBLEM_COUNT: number;
   MAX_PROMPT_CHAR_COUNT: number;
 }
@@ -72,6 +72,32 @@ export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT, MAX_PR
             maximumTrackTintColor="#e0e0e0"
             thumbTintColor="#007AFF"
         />
+
+              <Text style={styles.header}>Instructions (Optional) </Text>
+        <TextInput 
+          style={styles.input}
+          maxLength={MAX_PROMPT_CHAR_COUNT}
+          onChangeText={(val: string) => setPrompt(val)}
+          ></TextInput>
+
+        <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  disabled={isGenerateDisabled}
+                  testID="gen-button"
+                  onPress={() => onGenerate({
+                    totalProblems: problemSliderValue, 
+                    chocolateProblems: chocolateSliderValue, 
+                    prompt: prompt})}
+                >
+                  <Text>Generate Problem Set!</Text>
+                </TouchableOpacity>
+        
+                <TouchableOpacity
+                  testID="cancel-button">
+                  <Text>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+
 
       </View>
   )
