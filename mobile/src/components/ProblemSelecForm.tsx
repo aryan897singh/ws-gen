@@ -19,12 +19,20 @@ export interface ProblemSettings {
 interface ProblemSelecFormProps {
   onGenerate: (settings: ProblemSettings) => void;
   MAX_PROBLEM_COUNT: number;
+  MAX_PROMPT_CHAR_COUNT: number;
 }
 
-export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT}: ProblemSelecFormProps) {
+export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT, MAX_PROMPT_CHAR_COUNT}: ProblemSelecFormProps) {
   //DEV NOTE: Problem = Total Problem Count | Chocolate = Tricky Question Count | Rule: Chocolate <= Problem
   const [problemSliderValue, setProblemSliderValue] = useState(1);
   const [chocolateSliderValue, setChocolateSliderValue] = useState(0);
+  const [prompt, setPrompt] = useState("");
+  
+  const isProblemCountExceedMax = problemSliderValue > MAX_PROBLEM_COUNT;
+  const isChocolateCountExceedMax = chocolateSliderValue > problemSliderValue;
+  const isProblemCountNotEnough = problemSliderValue < 1;
+  const isChocolateCountNotEnough = chocolateSliderValue < 0;
+  const isGenerateDisabled = isProblemCountExceedMax || isChocolateCountExceedMax || isProblemCountNotEnough || isChocolateCountNotEnough;
 
   return(
     <View
@@ -144,5 +152,15 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     color: "#333333",
+  },
+  input: {
+    height: 48,
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    fontSize: 16,
+    color: "#000000",
+    backgroundColor: "#f8f9fa",
   },
 });
