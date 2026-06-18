@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -22,8 +22,31 @@ interface ProblemSelecFormProps {
 }
 
 export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT}: ProblemSelecFormProps) {
+  //DEV NOTE: Problem = Total Problem Count | Chocolate = Tricky Question Count | Rule: Chocolate <= Problem
+  const [problemSliderValue, setProblemSliderValue] = useState(1);
+  const [chocolateSliderValue, setChocolateSliderValue] = useState(0);
 
-  return <View />;
+  return(
+    <View
+      style={styles.container}>
+        <Text
+          style={styles.header}>Total Problem Count:</Text>
+        <Slider
+            testID="total-problems-slider"
+            style={{ width: '100%', height: 40 }}
+            minimumValue={1} 
+            maximumValue={MAX_PROBLEM_COUNT} 
+            step={1} 
+            value={problemSliderValue}
+            onValueChange={(val: number) => {
+              setProblemSliderValue(val);
+            }}
+            minimumTrackTintColor="#007AFF"
+            maximumTrackTintColor="#e0e0e0"
+            thumbTintColor="#007AFF"
+        />
+      </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -85,4 +108,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
   },
+  input: {
+    height: 48,
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    fontSize: 16,
+    color: "#000000",
+    backgroundColor: "#f8f9fa",
+  }
 });
