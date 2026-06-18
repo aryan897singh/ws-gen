@@ -19,9 +19,8 @@ interface ProblemSelecFormProps {
   onGenerate: (settings: ProblemSettings) => void;
 }
 
-export default function ProblemSelecForm({
-  onGenerate,
-}: ProblemSelecFormProps) {
+export default function ProblemSelecForm( {onGenerate}: ProblemSelecFormProps) {
+  
   return <View />;
 }
 
