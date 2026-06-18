@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import Slider from '@react-native-community/slider';
 
 /*This 'dto' needs to be sent to backend for processing
 hence the screen holding this component must hold this in it's state */
@@ -17,10 +18,11 @@ export interface ProblemSettings {
 
 interface ProblemSelecFormProps {
   onGenerate: (settings: ProblemSettings) => void;
+  MAX_PROBLEM_COUNT: number;
 }
 
-export default function ProblemSelecForm( {onGenerate}: ProblemSelecFormProps) {
-  
+export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT}: ProblemSelecFormProps) {
+
   return <View />;
 }
 
