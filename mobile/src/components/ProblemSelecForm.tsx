@@ -113,29 +113,36 @@ const styles = StyleSheet.create({
     height: 100,
     textAlignVertical: "top",
   },
-  button: {
-    backgroundColor: "#007AFF",
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 10,
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 16,
+    gap: 12,
   },
-  buttonDisabled: {
+  button: {
+    flex: 1,
+    height: 44,
+    borderRadius: 6,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  confirmButton: {
+    backgroundColor: "#007AFF",
+  },
+  disabledButton: {
     backgroundColor: "#A0CFFF",
+  },
+  cancelButton: {
+    backgroundColor: "#f8f9fa",
+    borderWidth: 1,
+    borderColor: "#cccccc",
   },
   buttonText: {
     color: "#ffffff",
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "600",
   },
-  input: {
-    height: 48,
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 6,
-    paddingHorizontal: 12,
-    fontSize: 16,
-    color: "#000000",
-    backgroundColor: "#f8f9fa",
-  }
+  cancelButtonText: {
+    color: "#333333",
+  },
 });
