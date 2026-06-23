@@ -75,6 +75,7 @@ export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT, MAX_PR
 
               <Text style={styles.header}>Instructions (Optional) </Text>
         <TextInput 
+          testID="prompt-input"
           style={styles.input}
           maxLength={MAX_PROMPT_CHAR_COUNT}
           onChangeText={(val: string) => setPrompt(val)}
