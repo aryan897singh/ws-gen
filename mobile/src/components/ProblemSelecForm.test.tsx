@@ -2,7 +2,8 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import ProblemSelecForm from "./ProblemSelecForm";
 
-const GEN_BTN_TXT = "Generate Question Set";
+const GEN_BTN_ID = "gen-button";
+const CANCEL_BTN_ID = "cancel-button";
 const TOTAL_PROB_SLIDER_ID = "total-problems-slider";
 const CHOCOLATE_PROB_SLIDER_ID = "chocolate-problems-slider";
 const PROMPT_INPUT_ID = "prompt-input";
@@ -29,8 +30,9 @@ describe("ProblemSelecForm Component", () => {
     const slider = getByTestId(TOTAL_PROB_SLIDER_ID);
     fireEvent(slider, "onValueChange", 0);
 
-    const genButton = getByText(GEN_BTN_TXT);
-    expect(genButton.props.disabled).toBe(true);
+    
+    const genButton = getByTestId(GEN_BTN_ID);
+    expect(genButton.props.accesibilityState.disabled).toBe(true);
   });
 
   it("accepts a maximum of injected total questions", () => {
