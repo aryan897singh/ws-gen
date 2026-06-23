@@ -70,8 +70,8 @@ describe("ProblemSelecForm Component", () => {
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 10);
     fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), "onValueChange", 11);
 
-    const genButton = getByText(GEN_BTN_TXT);
-    expect(genButton.props.disabled).toBe(true);
+    const genButton = getByTestId(GEN_BTN_ID);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
   });
 
   it("succesfully allows a blank instructions prompt", () => {
