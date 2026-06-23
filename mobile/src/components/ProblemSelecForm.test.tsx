@@ -58,8 +58,8 @@ describe("ProblemSelecForm Component", () => {
     const slider = getByTestId(CHOCOLATE_PROB_SLIDER_ID);
     fireEvent(slider, "onValueChange", 0);
 
-    const genButton = getByText(GEN_BTN_TXT);
-    expect(genButton.props.disabled).toBe(false);
+    const genButton = getByTestId(GEN_BTN_ID);
+    expect(genButton.props.accessibilityState.disabled).toBe(false);
   });
 
   it("succesfully prevents adding more chocolate problems than total problem count", () => {
