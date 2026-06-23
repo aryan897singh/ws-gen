@@ -85,11 +85,11 @@ describe("ProblemSelecForm Component", () => {
 
     fireEvent.changeText(getByTestId(PROMPT_INPUT_ID), "");
 
-    const genButton = getByText(GEN_BTN_TXT);
-    expect(genButton.props.disabled).toBe(false);
+    const genButton = getByTestId(GEN_BTN_ID);
+    expect(genButton.props.accessibilityState.disabled).toBe(false);
 
     fireEvent.changeText(getByTestId(PROMPT_INPUT_ID), "  ");
-    expect(genButton.props.disabled).toBe(false);
+    expect(genButton.props.accessibilityState.disabled).toBe(false);
   });
 
   it("succesfully accepts only positive integer problem count inputs", () => {
