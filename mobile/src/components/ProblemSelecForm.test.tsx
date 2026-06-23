@@ -99,30 +99,32 @@ describe("ProblemSelecForm Component", () => {
 
     //Setting valid count for enabling
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 15);
+    
 
-    const genButton = getByText(GEN_BTN_TXT);
-    expect(genButton.props.disabled).toBe(false);
+    const genButton = getByTestId(GEN_BTN_ID);
+    expect(genButton.props.accessibilityState.disabled).toBe(false);
 
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 1.5);
-    expect(genButton.props.disabled).toBe(true);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
 
     //Setting valid count for enabling
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 15);
     fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), "onValueChange", 0.5);
-    expect(genButton.props.disabled).toBe(true);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
 
     //NEGATIVE NUMBERS:
 
     //Setting valid count for enabling
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 15);
-    expect(genButton.props.disabled).toBe(false);
+    fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), "onValueChange", 0);
+    expect(genButton.props.accessibilityState.disabled).toBe(false);
 
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", -10);
-    expect(genButton.props.disabled).toBe(true);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
 
     //Setting valid count for enabling
     fireEvent(getByTestId(TOTAL_PROB_SLIDER_ID), "onValueChange", 15);
     fireEvent(getByTestId(CHOCOLATE_PROB_SLIDER_ID), "onValueChange", -7);
-    expect(genButton.props.disabled).toBe(true);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
   });
 });
