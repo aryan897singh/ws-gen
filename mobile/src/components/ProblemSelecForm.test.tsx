@@ -32,7 +32,7 @@ describe("ProblemSelecForm Component", () => {
 
     
     const genButton = getByTestId(GEN_BTN_ID);
-    expect(genButton.props.accesibilityState.disabled).toBe(true);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
   });
 
   it("accepts a maximum of injected total questions", () => {
@@ -43,8 +43,8 @@ describe("ProblemSelecForm Component", () => {
     const slider = getByTestId(TOTAL_PROB_SLIDER_ID);
     fireEvent(slider, "onValueChange", (MAX_PROBLEM_COUNT + 1));
 
-    const genButton = getByText(GEN_BTN_TXT);
-    expect(genButton.props.disabled).toBe(true);
+    const genButton = getByTestId(GEN_BTN_ID);
+    expect(genButton.props.accessibilityState.disabled).toBe(true);
   });
 
   it("succesfully accepts 0 chocolate problems", () => {
