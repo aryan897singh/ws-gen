@@ -32,7 +32,9 @@ export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT, MAX_PR
   const isChocolateCountExceedMax = chocolateSliderValue > problemSliderValue;
   const isProblemCountNotEnough = problemSliderValue < 1;
   const isChocolateCountNotEnough = chocolateSliderValue < 0;
-  const isGenerateDisabled = isProblemCountExceedMax || isChocolateCountExceedMax || isProblemCountNotEnough || isChocolateCountNotEnough;
+  const isProblemCountNotInteger = !Number.isInteger(problemSliderValue);
+  const isChocolateCountNotInteger = !Number.isInteger(chocolateSliderValue);
+  const isGenerateDisabled = isProblemCountExceedMax || isChocolateCountExceedMax || isProblemCountNotEnough || isChocolateCountNotEnough || isProblemCountNotInteger || isChocolateCountNotInteger;
 
   return(
     <View
