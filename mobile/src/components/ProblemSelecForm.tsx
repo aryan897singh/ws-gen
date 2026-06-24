@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import Slider from '@react-native-community/slider';
+import Slider from "@react-native-community/slider";
 
 /*This 'dto' needs to be sent to backend for processing
 hence the screen holding this component must hold this in it's state */
@@ -17,93 +17,108 @@ export interface ProblemSettings {
 }
 
 interface ProblemSelecFormProps {
-  onGenerate: ({totalProblems, chocolateProblems, prompt}: ProblemSettings) => void;
+  onGenerate: ({
+    totalProblems,
+    chocolateProblems,
+    prompt,
+  }: ProblemSettings) => void;
   MAX_PROBLEM_COUNT: number;
   MAX_PROMPT_CHAR_COUNT: number;
 }
 
-export default function ProblemSelecForm( {onGenerate, MAX_PROBLEM_COUNT, MAX_PROMPT_CHAR_COUNT}: ProblemSelecFormProps) {
+export default function ProblemSelecForm({
+  onGenerate,
+  MAX_PROBLEM_COUNT,
+  MAX_PROMPT_CHAR_COUNT,
+}: ProblemSelecFormProps) {
   //DEV NOTE: Problem = Total Problem Count | Chocolate = Tricky Question Count | Rule: Chocolate <= Problem
   const [problemSliderValue, setProblemSliderValue] = useState(1);
   const [chocolateSliderValue, setChocolateSliderValue] = useState(0);
   const [prompt, setPrompt] = useState("");
-  
+
   const isProblemCountExceedMax = problemSliderValue > MAX_PROBLEM_COUNT;
   const isChocolateCountExceedMax = chocolateSliderValue > problemSliderValue;
   const isProblemCountNotEnough = problemSliderValue < 1;
   const isChocolateCountNotEnough = chocolateSliderValue < 0;
   const isProblemCountNotInteger = !Number.isInteger(problemSliderValue);
   const isChocolateCountNotInteger = !Number.isInteger(chocolateSliderValue);
-  const isGenerateDisabled = isProblemCountExceedMax || isChocolateCountExceedMax || isProblemCountNotEnough || isChocolateCountNotEnough || isProblemCountNotInteger || isChocolateCountNotInteger;
+  const isGenerateDisabled =
+    isProblemCountExceedMax ||
+    isChocolateCountExceedMax ||
+    isProblemCountNotEnough ||
+    isChocolateCountNotEnough ||
+    isProblemCountNotInteger ||
+    isChocolateCountNotInteger;
 
-  return(
-    <View
-      style={styles.container}>
-        <Text
-          style={styles.header}>Total Problem Count:</Text>
-        <Slider
-            testID="total-problems-slider"
-            style={{ width: '100%', height: 40 }}
-            minimumValue={1} 
-            maximumValue={MAX_PROBLEM_COUNT} 
-            step={1} 
-            value={problemSliderValue}
-            onValueChange={(val: number) => {
-              setProblemSliderValue(val);
-            }}
-            minimumTrackTintColor="#007AFF"
-            maximumTrackTintColor="#e0e0e0"
-            thumbTintColor="#007AFF"
-        />
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Total Problem Count:</Text>
+      <Slider
+        testID="total-problems-slider"
+        style={{ width: "100%", height: 40 }}
+        minimumValue={1}
+        maximumValue={MAX_PROBLEM_COUNT}
+        step={1}
+        value={problemSliderValue}
+        onValueChange={(val: number) => {
+          setProblemSliderValue(val);
+        }}
+        minimumTrackTintColor="#007AFF"
+        maximumTrackTintColor="#e0e0e0"
+        thumbTintColor="#007AFF"
+      />
 
-        
-        <Text
-          style={styles.header}>Chocolate Problem Count: (Part of Total Problem Count)</Text>
-        <Text>Note: Chocolate Problems are trickier problems. You cannot input more than the total problem count!</Text>
-        <Slider
-            testID="chocolate-problems-slider"
-            style={{ width: '100%', height: 40 }}
-            minimumValue={0} 
-            maximumValue={problemSliderValue} 
-            step={1} 
-            value={problemSliderValue}
-            onValueChange={(val: number) => {
-              setChocolateSliderValue(val);
-            }}
-            minimumTrackTintColor="#007AFF"
-            maximumTrackTintColor="#e0e0e0"
-            thumbTintColor="#007AFF"
-        />
+      <Text style={styles.header}>
+        Chocolate Problem Count: (Part of Total Problem Count)
+      </Text>
+      <Text>
+        Note: Chocolate Problems are trickier problems. You cannot input more
+        than the total problem count!
+      </Text>
+      <Slider
+        testID="chocolate-problems-slider"
+        style={{ width: "100%", height: 40 }}
+        minimumValue={0}
+        maximumValue={problemSliderValue}
+        step={1}
+        value={problemSliderValue}
+        onValueChange={(val: number) => {
+          setChocolateSliderValue(val);
+        }}
+        minimumTrackTintColor="#007AFF"
+        maximumTrackTintColor="#e0e0e0"
+        thumbTintColor="#007AFF"
+      />
 
-              <Text style={styles.header}>Instructions (Optional) </Text>
-        <TextInput 
-          testID="prompt-input"
-          style={styles.input}
-          maxLength={MAX_PROMPT_CHAR_COUNT}
-          onChangeText={(val: string) => setPrompt(val)}
-          ></TextInput>
+      <Text style={styles.header}>Instructions (Optional) </Text>
+      <TextInput
+        testID="prompt-input"
+        style={styles.input}
+        maxLength={MAX_PROMPT_CHAR_COUNT}
+        onChangeText={(val: string) => setPrompt(val)}
+      ></TextInput>
 
-        <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  disabled={isGenerateDisabled}
-                  testID="gen-button"
-                  onPress={() => onGenerate({
-                    totalProblems: problemSliderValue, 
-                    chocolateProblems: chocolateSliderValue, 
-                    prompt: prompt})}
-                >
-                  <Text>Generate Problem Set!</Text>
-                </TouchableOpacity>
-        
-                <TouchableOpacity
-                  testID="cancel-button">
-                  <Text>Cancel</Text>
-                </TouchableOpacity>
-              </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          disabled={isGenerateDisabled}
+          testID="gen-button"
+          onPress={() =>
+            onGenerate({
+              totalProblems: problemSliderValue,
+              chocolateProblems: chocolateSliderValue,
+              prompt: prompt,
+            })
+          }
+        >
+          <Text>Generate Problem Set!</Text>
+        </TouchableOpacity>
 
-
+        <TouchableOpacity testID="cancel-button">
+          <Text>Cancel</Text>
+        </TouchableOpacity>
       </View>
-  )
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
