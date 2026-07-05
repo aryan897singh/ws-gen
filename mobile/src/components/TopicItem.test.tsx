@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import TopicItem from "./TopicItem";
 
-const DEL_TOPIC_BTN = "Delete Topic";
+const DEL_TOPIC_ID = "delete-button";
 const DEL_TOPIC_WRNING = "Are you sure you want to delete?";
 
 describe("TopicItem Component", () => {
@@ -23,12 +23,12 @@ describe("TopicItem Component", () => {
 
   it("requests confirmation when the delete button is pressed", () => {
     //render screen
-    const { getByText } = render(
+    const { getByTestId } = render(
       <TopicItem topic="Calculus III" onDelete={mockOnDelete} />,
     );
 
     //find button and fire
-    const delButton = getByText(DEL_TOPIC_BTN);
+    const delButton = getByTestId(DEL_TOPIC_ID);
     fireEvent.press(delButton);
     //Body of alert - Title, Message, Array of Buttons (Cancel/Confirm)
     expect(alertSpy).toHaveBeenCalledWith(
@@ -41,10 +41,10 @@ describe("TopicItem Component", () => {
   });
 
   it("succesfully calls onDelete when confirmation provided", () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <TopicItem topic="Calculus III" onDelete={mockOnDelete} />,
     );
-    const delButton = getByText(DEL_TOPIC_BTN);
+    const delButton = getByTestId(DEL_TOPIC_ID);
     fireEvent.press(delButton);
 
     //Now within the alert we call the cancel button
@@ -57,10 +57,10 @@ describe("TopicItem Component", () => {
 
   it("does NOT call onDelete when cancel is pressed in the alert", () => {
     //render screen
-    const { getByText } = render(
+    const { getByTestId } = render(
       <TopicItem topic="Calculus III" onDelete={mockOnDelete} />,
     );
-    const delButton = getByText(DEL_TOPIC_BTN);
+    const delButton = getByTestId(DEL_TOPIC_ID);
     fireEvent.press(delButton);
 
     //Now within the alert we call the cancel button
