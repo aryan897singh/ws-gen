@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Alert } from "react-native";
 
 interface TopicItemProps {
   topic: string;
@@ -7,6 +7,28 @@ interface TopicItemProps {
 }
 
 export default function TopicItem({ topic, onDelete }: TopicItemProps) {
+  const handleDeletePress = () => {
+      Alert.alert(
+        "Confirm Delete?",      
+        "Are you sure you want to delete?",    
+        [                  
+          {
+            text: "CONFIRM",
+            onPress: () => console.log("Topic Successfully deleted"),
+          },
+          {
+            text: "CANCEL",
+            onPress: () => console.log("Not deleting!"),
+            style: "cancel", 
+          },
+        ]
+);
+
+
+  }
+
+
+
   return <View />;
 }
 
@@ -21,7 +43,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#333333",
-    // Retaining the shadow structures from your other forms
+    // Retaining the shadow structures from other forms q
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
