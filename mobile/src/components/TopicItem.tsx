@@ -29,7 +29,17 @@ export default function TopicItem({ topic, onDelete }: TopicItemProps) {
 
 
 
-  return <View />;
+  return (
+    <View style = {styles.cardContainer}>
+        <Text style = {styles.topicText}>{topic}</Text>
+        <TouchableOpacity
+            style = {styles.deleteButton}
+            onPress = {onDelete}
+        >
+          <Text>Delete Topic</Text>
+          </TouchableOpacity>      
+    </View>
+  ) ;
 }
 
 const styles = StyleSheet.create({
