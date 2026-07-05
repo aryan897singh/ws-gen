@@ -8,38 +8,33 @@ interface TopicItemProps {
 
 export default function TopicItem({ topic, onDelete }: TopicItemProps) {
   const handleDeletePress = () => {
-      
-      Alert.alert(
-        "Confirm Delete?",      
-        "Are you sure you want to delete?",    
-        [                  
-          {
-            text: "CONFIRM",
-            onPress: () => {onDelete();}
-          },
-          {
-            text: "CANCEL",
-            onPress: () => console.log("Not deleting!"),
-            style: "cancel", 
-          },
-        ]
-);
-
-
-  }
+    Alert.alert("Confirm Delete?", "Are you sure you want to delete?", [
+      {
+        text: "CONFIRM",
+        onPress: () => {
+          onDelete();
+        },
+      },
+      {
+        text: "CANCEL",
+        onPress: () => console.log("Not deleting!"),
+        style: "cancel",
+      },
+    ]);
+  };
 
   return (
-    <View style = {styles.cardContainer}>
-        <Text style = {styles.topicText}>{topic}</Text>
-        <TouchableOpacity
-            style = {styles.deleteButton}
-            onPress = {handleDeletePress}
-            testID="delete-button"
-        >
-          <Text>Delete Topic</Text>
-          </TouchableOpacity>      
+    <View style={styles.cardContainer}>
+      <Text style={styles.topicText}>{topic}</Text>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={handleDeletePress}
+        testID="delete-button"
+      >
+        <Text>Delete Topic</Text>
+      </TouchableOpacity>
     </View>
-  ) ;
+  );
 }
 
 const styles = StyleSheet.create({
@@ -58,14 +53,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 3, 
+    elevation: 3,
   },
   topicText: {
     fontSize: 16,
     fontWeight: "500",
     color: "#e0e0e0", // High contrast light text
-    flex: 1,          // Allows text to wrap if it gets too long without pushing the button off-screen
-    marginRight: 16,  // Ensures breathing room between text and button
+    flex: 1, // Allows text to wrap if it gets too long without pushing the button off-screen
+    marginRight: 16, // Ensures breathing room between text and button
   },
   deleteButton: {
     backgroundColor: "transparent",
@@ -81,7 +76,5 @@ const styles = StyleSheet.create({
     color: "#ef4444",
     fontSize: 14,
     fontWeight: "600",
-  }
+  },
 });
-
-
