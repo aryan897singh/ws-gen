@@ -8,13 +8,14 @@ interface TopicItemProps {
 
 export default function TopicItem({ topic, onDelete }: TopicItemProps) {
   const handleDeletePress = () => {
+      
       Alert.alert(
         "Confirm Delete?",      
         "Are you sure you want to delete?",    
         [                  
           {
             text: "CONFIRM",
-            onPress: () => console.log("Topic Successfully deleted"),
+            onPress: () => {onDelete();}
           },
           {
             text: "CANCEL",
@@ -27,14 +28,13 @@ export default function TopicItem({ topic, onDelete }: TopicItemProps) {
 
   }
 
-
-
   return (
     <View style = {styles.cardContainer}>
         <Text style = {styles.topicText}>{topic}</Text>
         <TouchableOpacity
             style = {styles.deleteButton}
-            onPress = {onDelete}
+            onPress = {handleDeletePress}
+            testID="delete-button"
         >
           <Text>Delete Topic</Text>
           </TouchableOpacity>      
