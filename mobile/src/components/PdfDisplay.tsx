@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, 
   Text, 
   ActivityIndicator, 
@@ -20,6 +20,9 @@ export default function PdfDisplay({
   errorMessage,
   onDownload,
 }: PdfDisplayProps) {
+    const [apiStatus, setApiStatus] = useState<ApiStatus>("idle");
+
+
   return <View />;
 }
 
